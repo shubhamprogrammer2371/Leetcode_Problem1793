@@ -1,0 +1,18 @@
+int maximumScore( const int * const nums,const int numsLen,const int keyIdx){
+	int maxScore = nums[keyIdx];
+	for (int min = nums[keyIdx], left = keyIdx, right = keyIdx ; 1 ; )
+    {
+		if ((0 == left) && (numsLen - 1 == right))
+			break;
+		bool leftOrRight;	// false -> left, true -> right
+		if (numsLen - 1 == right)
+			leftOrRight = 0;
+		else if (0 == left)
+			leftOrRight = 1;
+		else 
+			leftOrRight = (nums[right + 1] > nums[left - 1]);
+		min = (!(leftOrRight)) ? fmin(nums[--left],min) : fmin(nums[++right],min);
+		maxScore = fmax((min * (right + 1 - left)),maxScore);
+	}
+	return maxScore;
+}
